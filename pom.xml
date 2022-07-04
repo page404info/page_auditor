@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>info.page404</groupId>
+    <artifactId>page_auditor</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <name>Page Auditor.</name>
+    <description>
+        This program can:
+        - check redirect, check robots.txt, sitemap.xml;
+        - search inner links and create site page tree;
+    </description>
+
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+
+        <version.lombok>1.18.20</version.lombok>
+        <version.log4j>2.12.1</version.log4j>
+        <version.testng>6.14.3</version.testng>
+        <version.rest-assured>3.2.0</version.rest-assured>
+        <version.selenide>5.20.4</version.selenide>
+        <version.webdrivermanager>5.0.3</version.webdrivermanager>
+        <version.openCsv>5.3</version.openCsv>
+        <version.jsoup>1.14.3</version.jsoup>
+    </properties>
+
+
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${version.lombok}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>${version.log4j}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${version.log4j}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>${version.testng}</version>
+            <!--            <scope>test</scope>-->
+        </dependency>
+
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>${version.rest-assured}</version>
+            <!--            <scope>test</scope>-->
+        </dependency>
+
+        <dependency>
+            <groupId>com.codeborne</groupId>
+            <artifactId>selenide</artifactId>
+            <version>${version.selenide}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>${version.webdrivermanager}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.6</version>
+        </dependency>
+        <dependency>
+            <groupId>com.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+            <version>${version.openCsv}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>${version.jsoup}</version>
+        </dependency>
+
+    </dependencies>
+
+</project>
