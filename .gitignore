@@ -124,6 +124,7 @@ fabric.properties
 
 #Config property
 src/main/resources/config.properties
+src/main/resources/META-INF/
 
 # BlueJ files
 *.ctxt
