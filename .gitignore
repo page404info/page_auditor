@@ -121,6 +121,9 @@ fabric.properties
 # Log file
 *.log
 
+#Config property
+src/main/resources/config.properties
+
 # BlueJ files
 *.ctxt
 
