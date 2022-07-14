@@ -11,23 +11,8 @@ import java.util.Properties;
 @Data
 public class PropertyReader {
     private static PropertyReader instance = null;
-    private String propertyFilePath = "./src/main/resources/config.properties";
-
-    private String srcUrl, isCheclAllPages, srcPathToUrls;
-    private String srcPackageName, redirectPackageName, hrefPackageName, pagePackageName, reportPackageName;
-
-    private String robotsTxtFileName, siteMapXmlFileName,
-            imgPage404FileName, imgRobotsTxtFileName, imgSiteMapXmlFileName,
-            reportRedirectFileName;
-
-    private String hrefFromSitemapXmlFileName, hrefFromSrcFileName, hrefInternalFileName,
-            reportSiteMapFileName, reportSubdomainFileName,
-            reportGeneralFileName, reportHeadFileName, reportBalanceFileName;
-
-
-    private PropertyReader() {
-        readProperty();
-    }
+    private String pathToFile = FileName.CONFIG.getName();
+    private String srcUrl, isCheckAllPages, srcFile, srcDir;
 
 
     public static PropertyReader getInstance() {
@@ -37,36 +22,20 @@ public class PropertyReader {
         return instance;
     }
 
+    private PropertyReader() {
+        readProperty();
+    }
+
     private void readProperty() {
-        try (InputStream fis = new FileInputStream(propertyFilePath)) {
+        try (InputStream fis = new FileInputStream(pathToFile)) {
             Properties prop = new Properties();
             prop.load(fis);
 
             srcUrl = prop.getProperty("srcUrl");
-            isCheclAllPages = prop.getProperty("isCheckAllPages");
-            srcPathToUrls = prop.getProperty("srcPathToUrls");
+            isCheckAllPages = prop.getProperty("isCheckAllPages");
+            srcFile = prop.getProperty("srcFile");
+            srcDir = prop.getProperty("srcDir");
 
-            srcPackageName = prop.getProperty("srcPackageName");
-            redirectPackageName = prop.getProperty("redirectPackageName");
-            hrefPackageName = prop.getProperty("hrefPackageName");
-            pagePackageName = prop.getProperty("pagePackageName");
-            reportPackageName = prop.getProperty("reportPackageName");
-
-            robotsTxtFileName = prop.getProperty("robotsTxtFileName");
-            siteMapXmlFileName = prop.getProperty("siteMapXmlFileName");
-            imgPage404FileName = prop.getProperty("imgPage404FileName");
-            imgRobotsTxtFileName = prop.getProperty("imgRobotsTxtFileName");
-            imgSiteMapXmlFileName = prop.getProperty("imgSiteMapXmlFileName");
-            reportRedirectFileName = prop.getProperty("reportRedirectFileName");
-
-            hrefInternalFileName = prop.getProperty("hrefInternalFileName");
-            hrefFromSitemapXmlFileName = prop.getProperty("hrefFromSitemapXmlFileName");
-            hrefFromSrcFileName = prop.getProperty("hrefFromSrcFileName");
-            reportSiteMapFileName = prop.getProperty("reportSiteMapFileName");
-            reportSubdomainFileName = prop.getProperty("reportSubdomainFileName");
-            reportGeneralFileName = prop.getProperty("reportGeneralFileName");
-            reportHeadFileName = prop.getProperty("reportHeadFileName");
-            reportBalanceFileName = prop.getProperty("reportBalanceFileName");
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();

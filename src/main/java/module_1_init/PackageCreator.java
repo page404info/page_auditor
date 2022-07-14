@@ -13,17 +13,13 @@ import java.time.format.DateTimeFormatter;
 @Data
 class PackageCreator {
     private String pathToSeoDir = "C://page404info";
-    private String pathToSrcDir, pathToSrcHtmlPagesDir, pathToRedirectDir, pathToHrefDir, pathToReportDir;
+    private String pathToSrcDir;
 
 
     public void create(String url) {
         log.debug(new Exception().getStackTrace()[0].getMethodName());
         createMainDir();
         createSrcDir(url);
-        createRedirectDir();
-        createHrefDir();
-        createSrcHtmlPagesDir();
-        createReportDir();
     }
 
 
@@ -53,63 +49,6 @@ class PackageCreator {
             log.error(new Exception().getStackTrace()[0].getMethodName() + " " + e);
         }
     }
-
-    private void createRedirectDir() {
-        log.debug(new Exception().getStackTrace()[0].getMethodName());
-        try {
-            pathToRedirectDir = pathToSrcDir + "/redirect";
-            if (Files.notExists(Paths.get(pathToRedirectDir))) {
-                Files.createDirectory(Paths.get(pathToRedirectDir));
-            }
-        } catch (IOException e) {
-            log.error(new Exception().getStackTrace()[0].getMethodName() + " " + e);
-        } catch (Exception e) {
-            log.error(new Exception().getStackTrace()[0].getMethodName() + " " + e);
-        }
-    }
-
-    private void createSrcHtmlPagesDir() {
-        log.debug(new Exception().getStackTrace()[0].getMethodName());
-        try {
-            pathToSrcHtmlPagesDir = pathToSrcDir + "/srcHtmlPages";
-            if (Files.notExists(Paths.get(pathToSrcHtmlPagesDir))) {
-                Files.createDirectory(Paths.get(pathToSrcHtmlPagesDir));
-            }
-        } catch (IOException e) {
-            log.error(new Exception().getStackTrace()[0].getMethodName() + " " + e);
-        } catch (Exception e) {
-            log.error(new Exception().getStackTrace()[0].getMethodName() + " " + e);
-        }
-    }
-
-    private void createHrefDir() {
-        log.debug(new Exception().getStackTrace()[0].getMethodName());
-        try {
-            pathToHrefDir = pathToSrcDir + "/href";
-            if (Files.notExists(Paths.get(pathToHrefDir))) {
-                Files.createDirectory(Paths.get(pathToHrefDir));
-            }
-        } catch (IOException e) {
-            log.error(new Exception().getStackTrace()[0].getMethodName() + " " + e);
-        } catch (Exception e) {
-            log.error(new Exception().getStackTrace()[0].getMethodName() + " " + e);
-        }
-    }
-
-    private void createReportDir() {
-        log.debug(new Exception().getStackTrace()[0].getMethodName());
-        try {
-            pathToReportDir = pathToSrcDir + "/_reports";
-            if (Files.notExists(Paths.get(pathToReportDir))) {
-                Files.createDirectory(Paths.get(pathToReportDir));
-            }
-        } catch (IOException e) {
-            log.error(new Exception().getStackTrace()[0].getMethodName() + " " + e);
-        } catch (Exception e) {
-            log.error(new Exception().getStackTrace()[0].getMethodName() + " " + e);
-        }
-    }
-
 
     private String getSrcPackageName(String url) {
         log.debug(new Exception().getStackTrace()[0].getMethodName());

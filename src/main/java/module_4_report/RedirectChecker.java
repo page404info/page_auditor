@@ -1,5 +1,6 @@
-package module_2_redirect;
+package module_4_report;
 
+import helper.FileName;
 import helper.MyHelper;
 import helper.PropertyReader;
 import io.restassured.response.Response;
@@ -15,15 +16,15 @@ import static io.restassured.RestAssured.given;
 @Log4j2
 public class RedirectChecker {
     private String srcUrl = PropertyReader.getInstance().getSrcUrl();
-    private String redirectPackageName = PropertyReader.getInstance().getRedirectPackageName();
-    private String redirectReportFileName = PropertyReader.getInstance().getReportRedirectFileName();
+    private String pathToSave = PropertyReader.getInstance().getSrcDir() + FileName.REPORT_REDIRECT.getName();
 
     public void check() {
         log.debug(new Exception().getStackTrace()[0].getMethodName());
-        writeResult(getRedirectResults(), redirectPackageName + redirectReportFileName);
+        writeResult(getRedirectResults(), pathToSave);
     }
 
     private List<String> getRedirectResults() {
+        log.debug(new Exception().getStackTrace()[0].getMethodName());
         List<String> resultList = new ArrayList<>();
         List<String> prefixList = getPrefixListForRedirect();
 
@@ -85,6 +86,7 @@ public class RedirectChecker {
     }
 
     private void writeResult(List<String> results, String pathToFile) {
+        log.debug(new Exception().getStackTrace()[0].getMethodName());
         try {
             FileWriter writer = new FileWriter(pathToFile, false);
             writer.write("statusCode");
@@ -100,7 +102,7 @@ public class RedirectChecker {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        log.info("CREATED FILE = " + pathToFile);
+        log.info("Redirect REPORT SAVED TO FILE = " + pathToFile);
     }
 
 

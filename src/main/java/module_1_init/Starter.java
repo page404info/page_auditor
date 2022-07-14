@@ -16,28 +16,31 @@ public class Starter {
     }
 
     private void inputParams() {
+        log.debug(new Exception().getStackTrace()[0].getMethodName());
         do {
             srcUrl = inputSrcUrl();
         } while (!MyHelper.isHrefPing(srcUrl));
 
+        log.info(">>> START checking = " + srcUrl);
+
         isCheckAllPages = isCheckAllPages();
 
-        if (isPageFile()) {
+        if (isCheckAllPages && isPageFile()) {
             do {
-                pathToSrcHref = inputPathToSrcHref();
+                pathToSrcHref = inputPathToSrcFile();
             } while (!MyHelper.isFilePing(pathToSrcHref));
+            log.info("path to src file = " + pathToSrcHref);
         }
-
-        log.info("< user params checked".toUpperCase());
     }
 
     private void createConfigProperty() {
+        log.debug(new Exception().getStackTrace()[0].getMethodName());
         PackageCreator packageCreator = new PackageCreator();
 
         packageCreator.create(srcUrl);
-        new PropertyFileCreator().create(srcUrl, isCheckAllPages + "", packageCreator, pathToSrcHref);
+        new PropertyCreator().create(srcUrl, isCheckAllPages + "", packageCreator, pathToSrcHref);
 
-        log.info("< config property created".toUpperCase());
+        log.info("Config property CREATED");
     }
 
 
@@ -74,7 +77,7 @@ public class Starter {
         return result;
     }
 
-    private String inputPathToSrcHref() {
+    private String inputPathToSrcFile() {
         log.debug(new Exception().getStackTrace()[0].getMethodName());
         Scanner sc = new Scanner(System.in);
         System.out.print(">> Input path to file: ");

@@ -27,6 +27,7 @@
         <version.webdrivermanager>5.0.3</version.webdrivermanager>
         <version.openCsv>5.3</version.openCsv>
         <version.jsoup>1.14.3</version.jsoup>
+        <version.gson>2.9.0</version.gson>
     </properties>
 
 
@@ -90,6 +91,12 @@
             <artifactId>jsoup</artifactId>
             <version>${version.jsoup}</version>
         </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>${version.gson}</version>
+        </dependency>
+
 
     </dependencies>
 
