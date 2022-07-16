@@ -1,9 +1,8 @@
 package module_4_report;
 
 import helper.FileName;
-import helper.PropertyReader;
+import helper.PropertyConfigReader;
 import io.restassured.response.Response;
-import io.restassured.response.ResponseBody;
 import lombok.Data;
 import lombok.extern.log4j.Log4j2;
 import module_3_parser.objects.Img;
@@ -18,7 +17,7 @@ import static io.restassured.RestAssured.given;
 @Log4j2
 @Data
 public class PageLoadReporter {
-    private String pathToReport = PropertyReader.getInstance().getSrcDir() + FileName.REPORT_PAGE_LOAD.getName();
+    private String pathToReport = PropertyConfigReader.getInstance().getSrcDir() + FileName.REPORT_PAGE_LOAD.getName();
 
     public void create(List<Page> pages) {
         log.debug(new Exception().getStackTrace()[0].getMethodName());

@@ -24,5 +24,8 @@ public class ElementCounter {
     private Integer inputFieldCount;
     private Integer buttonCount;
     private Integer tableCount;
-    private Integer charCount;
+
+    private Integer charDocumentCount;
+    private Integer charTextCount;
+    private boolean isComment;
 }

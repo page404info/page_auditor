@@ -2,7 +2,7 @@ package module_2_crawler;
 
 import helper.FileName;
 import helper.MyHelper;
-import helper.PropertyReader;
+import helper.PropertyConfigReader;
 import lombok.extern.log4j.Log4j2;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -15,8 +15,8 @@ import java.util.TreeSet;
 
 @Log4j2
 public class CrawlerWeb {
-    private String srcUrl = PropertyReader.getInstance().getSrcUrl();
-    private String pathToSave = PropertyReader.getInstance().getSrcDir() + FileName.HREF_INTERNAL.getName();
+    private String srcUrl = PropertyConfigReader.getInstance().getSrcUrl();
+    private String pathToSave = PropertyConfigReader.getInstance().getSrcDir() + FileName.HREF_INTERNAL.getName();
 
     public void search() {
         log.debug(new Exception().getStackTrace()[0].getMethodName());
@@ -32,7 +32,7 @@ public class CrawlerWeb {
         Set<String> resultList = new TreeSet<>();
         resultList.add(srcUrl);
 
-        if (Boolean.parseBoolean(PropertyReader.getInstance().getIsCheckAllPages())) {
+        if (Boolean.parseBoolean(PropertyConfigReader.getInstance().getIsCheckAllPages())) {
             resultList.addAll(new CrawlerFile().search());
             resultList.addAll(new CrawlerSitemapXml().search());
             resultList.addAll(checkAllPages(resultList));
@@ -48,7 +48,7 @@ public class CrawlerWeb {
         resultList.add(srcUrl);
 
         try {
-            Document document = Jsoup.connect(pageUrl).maxBodySize(0).userAgent("Mozilla").get();
+            Document document = Jsoup.connect(pageUrl).maxBodySize(0).userAgent("Mozilla").ignoreHttpErrors(true).get();
 
             Elements links = document.getElementsByTag("a");
             for (Element link : links) {

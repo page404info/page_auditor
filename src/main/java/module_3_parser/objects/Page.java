@@ -14,6 +14,7 @@ public class Page {
 
     private String charset;
     private String viewport;
+    private String faviconAttr;
 
     private List<String> linkList;
     private List<String> scriptList;

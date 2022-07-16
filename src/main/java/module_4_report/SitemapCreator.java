@@ -2,7 +2,7 @@ package module_4_report;
 
 import helper.FileName;
 import helper.MyHelper;
-import helper.PropertyReader;
+import helper.PropertyConfigReader;
 import lombok.extern.log4j.Log4j2;
 
 import java.io.FileWriter;
@@ -11,8 +11,8 @@ import java.util.List;
 
 @Log4j2
 public class SitemapCreator {
-    private String pathToInnerHrefFile = PropertyReader.getInstance().getSrcDir() + FileName.HREF_INTERNAL.getName();
-    private String pathToSitemapFile = PropertyReader.getInstance().getSrcDir() + FileName.REPORT_SITEMAP.getName();
+    private String pathToInnerHrefFile = PropertyConfigReader.getInstance().getSrcDir() + FileName.HREF_INTERNAL.getName();
+    private String pathToSitemapFile = PropertyConfigReader.getInstance().getSrcDir() + FileName.REPORT_SITEMAP.getName();
 
     public void create() {
         log.debug(new Exception().getStackTrace()[0].getMethodName());
@@ -26,7 +26,7 @@ public class SitemapCreator {
                     length++;
                 }
 
-                if (urlList.get(i).length() != PropertyReader.getInstance().getSrcUrl().length()) {
+                if (urlList.get(i).length() != PropertyConfigReader.getInstance().getSrcUrl().length()) {
                     for (int j = 1; j < length; j++) {
                         writer.write("\t");
                     }

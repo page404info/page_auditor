@@ -9,20 +9,20 @@ import java.io.InputStream;
 import java.util.Properties;
 
 @Data
-public class PropertyReader {
-    private static PropertyReader instance = null;
-    private String pathToFile = FileName.CONFIG.getName();
-    private String srcUrl, isCheckAllPages, srcFile, srcDir;
+public class PropertyObjectFileCountReader {
+    private static PropertyObjectFileCountReader instance = null;
+    private String pathToFile = FileName.OBJECT_FILE_COUNT.getName();
+    private String objectFileCount;
 
 
-    public static PropertyReader getInstance() {
+    public static PropertyObjectFileCountReader getInstance() {
         if (instance == null) {
-            instance = new PropertyReader();
+            instance = new PropertyObjectFileCountReader();
         }
         return instance;
     }
 
-    private PropertyReader() {
+    private PropertyObjectFileCountReader() {
         readProperty();
     }
 
@@ -31,11 +31,7 @@ public class PropertyReader {
             Properties prop = new Properties();
             prop.load(fis);
 
-            srcUrl = prop.getProperty("srcUrl");
-            isCheckAllPages = prop.getProperty("isCheckAllPages");
-            srcFile = prop.getProperty("srcFile");
-            srcDir = prop.getProperty("srcDir");
-
+            objectFileCount = prop.getProperty("objectFileCount");
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();

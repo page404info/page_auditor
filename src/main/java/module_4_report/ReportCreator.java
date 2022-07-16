@@ -3,7 +3,7 @@ package module_4_report;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import helper.FileName;
-import helper.PropertyReader;
+import helper.PropertyConfigReader;
 import lombok.Data;
 import lombok.extern.log4j.Log4j2;
 import module_3_parser.objects.Page;
@@ -17,7 +17,7 @@ import java.util.List;
 @Log4j2
 @Data
 public class ReportCreator {
-    private String pathToJsonFile = PropertyReader.getInstance().getSrcDir() + FileName.PAGE_OBJECT.getName();
+    private String pathToJsonFile = PropertyConfigReader.getInstance().getSrcDir() + FileName.PAGE_OBJECT.getName();
     private List<Page> pages = getPageListFromJsonFile(pathToJsonFile);
 
     public void create(){

@@ -1,7 +1,8 @@
 package module_4_report;
 
 import helper.FileName;
-import helper.PropertyReader;
+import helper.MyHelper;
+import helper.PropertyConfigReader;
 import io.restassured.response.Response;
 import lombok.Data;
 import lombok.extern.log4j.Log4j2;
@@ -18,7 +19,7 @@ import static io.restassured.RestAssured.given;
 @Log4j2
 @Data
 public class PageHrefReporter {
-    private String pathToReport = PropertyReader.getInstance().getSrcDir() + FileName.REPORT_PAGE_HREF.getName();
+    private String pathToReport = PropertyConfigReader.getInstance().getSrcDir() + FileName.REPORT_PAGE_HREF.getName();
 
     public void create(List<Page> pages) {
         log.debug(new Exception().getStackTrace()[0].getMethodName());
@@ -29,7 +30,7 @@ public class PageHrefReporter {
 
     private void createReportBody(List<Page> pages) {
         log.debug(new Exception().getStackTrace()[0].getMethodName());
-        String srcUrl = PropertyReader.getInstance().getSrcUrl();
+        String srcUrl = PropertyConfigReader.getInstance().getSrcUrl();
         Response response;
         int pageCount = pages.size();
 
@@ -47,19 +48,11 @@ public class PageHrefReporter {
 
                 for (String item : linkList) {
                     String type = "link";
-                    int statusCode = -1, isInner = 0, is_ = 0, isPercent = 0, isMore120Char = 0;
+                    int statusCode = -1, isInner = 0;
                     if (item.contains(srcUrl)) {
                         isInner = 1;
                     }
-                    if (item.contains("_")) {
-                        is_ = 1;
-                    }
-                    if (item.contains("%")) {
-                        isPercent = 1;
-                    }
-                    if (item.length() > 120) {
-                        isMore120Char = 1;
-                    }
+
 
                     try {
                         response = given().when().get(item);
@@ -74,16 +67,22 @@ public class PageHrefReporter {
                     writer.append(';');
                     writer.write(type);
                     writer.append(';');
+                    writer.write(MyHelper.getProtocol(item));
+                    writer.append(';');
 
                     writer.write(isInner + "");
                     writer.append(';');
-                    writer.write(is_ + "");
+                    writer.write(MyHelper.isHrefContains_(item) + "");
                     writer.append(';');
-                    writer.write(isPercent + "");
+                    writer.write(MyHelper.isHrefContainsPercent(item) + "");
                     writer.append(';');
-                    writer.write(isMore120Char + "");
+                    writer.write(MyHelper.isHrefContainsScript(item) + "");
+                    writer.append(';');
+                    writer.write(MyHelper.isHrefContainsParams(item) + "");
                     writer.append(';');
 
+                    writer.write(MyHelper.isHrefLengthMore120(item) + "");
+                    writer.append(';');
                     writer.write(item.length() + "");
                     writer.append(';');
                     writer.write(item);
@@ -102,19 +101,11 @@ public class PageHrefReporter {
 
                 for (String item : scriptList) {
                     String type = "script";
-                    int statusCode = -1, isInner = 0, is_ = 0, isPercent = 0, isMore120Char = 0;
+                    int statusCode = -1, isInner = 0;
                     if (item.contains(srcUrl)) {
                         isInner = 1;
                     }
-                    if (item.contains("_")) {
-                        is_ = 1;
-                    }
-                    if (item.contains("%")) {
-                        isPercent = 1;
-                    }
-                    if (item.length() > 120) {
-                        isMore120Char = 1;
-                    }
+
 
                     try {
                         response = given().when().get(item);
@@ -129,16 +120,22 @@ public class PageHrefReporter {
                     writer.append(';');
                     writer.write(type);
                     writer.append(';');
+                    writer.write(MyHelper.getProtocol(item));
+                    writer.append(';');
 
                     writer.write(isInner + "");
                     writer.append(';');
-                    writer.write(is_ + "");
+                    writer.write(MyHelper.isHrefContains_(item) + "");
                     writer.append(';');
-                    writer.write(isPercent + "");
+                    writer.write(MyHelper.isHrefContainsPercent(item) + "");
                     writer.append(';');
-                    writer.write(isMore120Char + "");
+                    writer.write(MyHelper.isHrefContainsScript(item) + "");
+                    writer.append(';');
+                    writer.write(MyHelper.isHrefContainsParams(item) + "");
                     writer.append(';');
 
+                    writer.write(MyHelper.isHrefLengthMore120(item) + "");
+                    writer.append(';');
                     writer.write(item.length() + "");
                     writer.append(';');
                     writer.write(item);
@@ -157,20 +154,12 @@ public class PageHrefReporter {
 
                 for (Href item : hrefList) {
                     String type = "href";
-                    int statusCode = -1, isInner = 0, is_ = 0, isPercent = 0, isMore120Char = 0;
                     String itemUrl = item.getHref();
+                    int statusCode = -1, isInner = 0;
                     if (itemUrl.contains(srcUrl)) {
                         isInner = 1;
                     }
-                    if (itemUrl.contains("_")) {
-                        is_ = 1;
-                    }
-                    if (itemUrl.contains("%")) {
-                        isPercent = 1;
-                    }
-                    if (itemUrl.length() > 120) {
-                        isMore120Char = 1;
-                    }
+
 
                     try {
                         response = given().when().get(itemUrl);
@@ -185,16 +174,22 @@ public class PageHrefReporter {
                     writer.append(';');
                     writer.write(type);
                     writer.append(';');
+                    writer.write(MyHelper.getProtocol(item.getHref()));
+                    writer.append(';');
 
                     writer.write(isInner + "");
                     writer.append(';');
-                    writer.write(is_ + "");
+                    writer.write(MyHelper.isHrefContains_(itemUrl) + "");
                     writer.append(';');
-                    writer.write(isPercent + "");
+                    writer.write(MyHelper.isHrefContainsPercent(itemUrl) + "");
                     writer.append(';');
-                    writer.write(isMore120Char + "");
+                    writer.write(MyHelper.isHrefContainsScript(itemUrl) + "");
+                    writer.append(';');
+                    writer.write(MyHelper.isHrefContainsParams(itemUrl) + "");
                     writer.append(';');
 
+                    writer.write(MyHelper.isHrefLengthMore120(itemUrl) + "");
+                    writer.append(';');
                     writer.write(itemUrl.length() + "");
                     writer.append(';');
                     writer.write(itemUrl);
@@ -213,19 +208,10 @@ public class PageHrefReporter {
 
                 for (Img item : imgList) {
                     String type = "img";
-                    int statusCode = -1, isInner = 0, is_ = 0, isPercent = 0, isMore120Char = 0;
                     String itemUrl = item.getSrc();
+                    int statusCode = -1, isInner = 0;
                     if (itemUrl.contains(srcUrl)) {
                         isInner = 1;
-                    }
-                    if (itemUrl.contains("_")) {
-                        is_ = 1;
-                    }
-                    if (itemUrl.contains("%")) {
-                        isPercent = 1;
-                    }
-                    if (itemUrl.length() > 120) {
-                        isMore120Char = 1;
                     }
 
                     try {
@@ -241,16 +227,22 @@ public class PageHrefReporter {
                     writer.append(';');
                     writer.write(type);
                     writer.append(';');
+                    writer.write(MyHelper.getProtocol(item.getSrc()));
+                    writer.append(';');
 
                     writer.write(isInner + "");
                     writer.append(';');
-                    writer.write(is_ + "");
+                    writer.write(MyHelper.isHrefContains_(itemUrl) + "");
                     writer.append(';');
-                    writer.write(isPercent + "");
+                    writer.write(MyHelper.isHrefContainsPercent(itemUrl) + "");
                     writer.append(';');
-                    writer.write(isMore120Char + "");
+                    writer.write(MyHelper.isHrefContainsScript(itemUrl) + "");
+                    writer.append(';');
+                    writer.write(MyHelper.isHrefContainsParams(itemUrl) + "");
                     writer.append(';');
 
+                    writer.write(MyHelper.isHrefLengthMore120(itemUrl) + "");
+                    writer.append(';');
                     writer.write(itemUrl.length() + "");
                     writer.append(';');
                     writer.write(itemUrl);
@@ -284,6 +276,8 @@ public class PageHrefReporter {
             writer.append(';');
             writer.write("type"); //link, script, href, img
             writer.append(';');
+            writer.write("protocol"); //https, ftp
+            writer.append(';');
 
             writer.write("isInner");
             writer.append(';');
@@ -291,9 +285,13 @@ public class PageHrefReporter {
             writer.append(';');
             writer.write("is%");
             writer.append(';');
-            writer.write("is>120Char");
+            writer.write("isScript");
+            writer.append(';');
+            writer.write("isParams");
             writer.append(';');
 
+            writer.write("is>120Char");
+            writer.append(';');
             writer.write("srcLength");
             writer.append(';');
             writer.write("src");

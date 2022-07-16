@@ -1,7 +1,7 @@
 package module_2_crawler;
 
 import helper.MyHelper;
-import helper.PropertyReader;
+import helper.PropertyConfigReader;
 import lombok.extern.log4j.Log4j2;
 
 import java.util.List;
@@ -10,8 +10,8 @@ import java.util.TreeSet;
 
 @Log4j2
 public class CrawlerFile {
-    private String srcUrl = PropertyReader.getInstance().getSrcUrl();
-    private String pathToFile = PropertyReader.getInstance().getSrcFile();
+    private String srcUrl = PropertyConfigReader.getInstance().getSrcUrl();
+    private String pathToFile = PropertyConfigReader.getInstance().getSrcFile();
 
     public Set<String> search() {
         log.debug(new Exception().getStackTrace()[0].getMethodName());

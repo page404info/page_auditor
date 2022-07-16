@@ -78,7 +78,7 @@ public class MyHelper {
 
     public static boolean isInnerHref(String href) {
         boolean result = false;
-        if (href.contains(PropertyReader.getInstance().getSrcUrl()) && isHtmlPage(href)) {
+        if (href.contains(PropertyConfigReader.getInstance().getSrcUrl()) && isHtmlPage(href)) {
             result = true;
         }
 
@@ -89,7 +89,7 @@ public class MyHelper {
         log.debug(new Exception().getStackTrace()[0].getMethodName());
         boolean result = true;
         href = href.toLowerCase();
-        if (href.equals(PropertyReader.getInstance().getSrcUrl() + "/index.html")
+        if (href.equals(PropertyConfigReader.getInstance().getSrcUrl() + "/index.html")
                 || href.contains("/download")
                 || href.contains("/file")
                 || href.contains("/javascript")
@@ -200,4 +200,52 @@ public class MyHelper {
         driver.close();
         driver.quit();
     }
+
+    public static String getProtocol(String href) {
+        return href.split(":")[0];
+    }
+
+    public static int isHrefContains_(String href) {
+        int result = 0;
+        if (href.contains("_")) {
+            result = 1;
+        }
+        return result;
+    }
+
+    public static int isHrefContainsPercent(String href) {
+        int result = 0;
+        if (href.contains("%")) {
+            result = 1;
+        }
+        return result;
+    }
+
+    public static int isHrefLengthMore120(String href) {
+        int result = 0;
+        if (href.length() > 120) {
+            result = 1;
+        }
+        return result;
+    }
+
+    public static int isHrefContainsScript(String href) {
+        int result = 0;
+        if (href.contains("<script")
+                || href.contains("<noscript")
+                || href.contains("javascript:")
+        ) {
+            result = 1;
+        }
+        return result;
+    }
+
+    public static int isHrefContainsParams(String href) {
+        int result = 0;
+        if (href.contains("/?")) {
+            result = 1;
+        }
+        return result;
+    }
+
 }

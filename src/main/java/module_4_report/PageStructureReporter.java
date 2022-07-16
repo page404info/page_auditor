@@ -1,7 +1,7 @@
 package module_4_report;
 
 import helper.FileName;
-import helper.PropertyReader;
+import helper.PropertyConfigReader;
 import lombok.Data;
 import lombok.extern.log4j.Log4j2;
 import module_3_parser.objects.Page;
@@ -13,7 +13,7 @@ import java.util.List;
 @Log4j2
 @Data
 public class PageStructureReporter {
-    private String pathToReport = PropertyReader.getInstance().getSrcDir() + FileName.REPORT_PAGE_STRUCTURE.getName();
+    private String pathToReport = PropertyConfigReader.getInstance().getSrcDir() + FileName.REPORT_PAGE_STRUCTURE.getName();
 
     public void create(List<Page> pages) {
         log.debug(new Exception().getStackTrace()[0].getMethodName());
@@ -33,16 +33,19 @@ public class PageStructureReporter {
                 writer.write(page.getPageName());
                 writer.append(';');
 
+                log.debug(">>> " + page.getPageName() + " : " + page.getCharset());
                 writer.write(page.getCharset());
                 writer.append(';');
                 writer.write(page.getViewport());
                 writer.append(';');
+                writer.write(page.getFaviconAttr());
+                writer.append(';');
 
+                writer.write(page.getElementCounter().getFaviconCount() + "");
+                writer.append(';');
                 writer.write(page.getElementCounter().getTitleCount() + "");
                 writer.append(';');
                 writer.write(page.getElementCounter().getDescriptionCount() + "");
-                writer.append(';');
-                writer.write(page.getElementCounter().getFaviconCount() + "");
                 writer.append(';');
 
                 writer.write(page.getElementCounter().getStyleCount() + "");
@@ -75,7 +78,15 @@ public class PageStructureReporter {
                 writer.append(';');
                 writer.write(page.getElementCounter().getTableCount() + "");
                 writer.append(';');
-                writer.write(page.getElementCounter().getCharCount() + "");
+
+                writer.write(page.getElementCounter().getCharDocumentCount() + "");
+                writer.append(';');
+                writer.write(page.getElementCounter().getCharTextCount() + "");
+                writer.append(';');
+                writer.write((page.getElementCounter().getCharTextCount() * 100 /
+                        page.getElementCounter().getCharDocumentCount()) + "");
+                writer.append(';');
+                writer.write(page.getElementCounter().isComment() + "");
 
                 writer.append('\n');
                 writer.close();
@@ -96,12 +107,14 @@ public class PageStructureReporter {
             writer.append(';');
             writer.write("viewport");
             writer.append(';');
+            writer.write("faviconAttr");
+            writer.append(';');
 
+            writer.write("favicon");
+            writer.append(';');
             writer.write("title");
             writer.append(';');
             writer.write("description");
-            writer.append(';');
-            writer.write("favicon");
             writer.append(';');
 
             writer.write("style");
@@ -136,7 +149,14 @@ public class PageStructureReporter {
             writer.append(';');
             writer.write("table");
             writer.append(';');
-            writer.write("char");
+
+            writer.write("charDocument");
+            writer.append(';');
+            writer.write("charText");
+            writer.append(';');
+            writer.write("%Text");
+            writer.append(';');
+            writer.write("isComment");
 
             writer.append('\n');
             writer.close();

@@ -10,7 +10,7 @@ import java.io.OutputStream;
 import java.util.Properties;
 
 @Log4j2
-class PropertyCreator {
+class PropertyConfigCreator {
     private String pathToFile = FileName.CONFIG.getName();
 
     public void create(String srcUrl, String isCheckAllPages, PackageCreator packageCreator, String srcFile) {

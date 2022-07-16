@@ -38,7 +38,7 @@ public class Starter {
         PackageCreator packageCreator = new PackageCreator();
 
         packageCreator.create(srcUrl);
-        new PropertyCreator().create(srcUrl, isCheckAllPages + "", packageCreator, pathToSrcHref);
+        new PropertyConfigCreator().create(srcUrl, isCheckAllPages + "", packageCreator, pathToSrcHref);
 
         log.info("Config property CREATED");
     }

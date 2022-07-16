@@ -2,7 +2,7 @@ package module_4_report;
 
 import helper.FileName;
 import helper.MyHelper;
-import helper.PropertyReader;
+import helper.PropertyConfigReader;
 import io.restassured.response.Response;
 import lombok.extern.log4j.Log4j2;
 
@@ -15,8 +15,8 @@ import static io.restassured.RestAssured.given;
 
 @Log4j2
 public class RedirectChecker {
-    private String srcUrl = PropertyReader.getInstance().getSrcUrl();
-    private String pathToSave = PropertyReader.getInstance().getSrcDir() + FileName.REPORT_REDIRECT.getName();
+    private String srcUrl = PropertyConfigReader.getInstance().getSrcUrl();
+    private String pathToSave = PropertyConfigReader.getInstance().getSrcDir() + FileName.REPORT_REDIRECT.getName();
 
     public void check() {
         log.debug(new Exception().getStackTrace()[0].getMethodName());
