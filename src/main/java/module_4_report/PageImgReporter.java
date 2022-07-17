@@ -19,14 +19,14 @@ import static io.restassured.RestAssured.given;
 public class PageImgReporter {
     private String pathToReport = PropertyConfigReader.getInstance().getSrcDir() + FileName.REPORT_PAGE_IMG.getName();
 
-    public void create(List<Page> pages) {
-        log.debug(new Exception().getStackTrace()[0].getMethodName());
-        createReportHeader();
-        createReportBody(pages);
-        log.info("Page image REPORT SAVED TO FILE = " + pathToReport);
-    }
+//    public void create(List<Page> pages) {
+//        log.debug(new Exception().getStackTrace()[0].getMethodName());
+//        createReportHeader();
+//        createReportBody(pages);
+//        log.info("Page image REPORT SAVED TO FILE = " + pathToReport);
+//    }
 
-    private void createReportBody(List<Page> pages) {
+    public void createReportBody(List<Page> pages) {
         log.debug(new Exception().getStackTrace()[0].getMethodName());
         Response response;
         int pageCount = pages.size();
@@ -56,11 +56,11 @@ public class PageImgReporter {
                     int wLength = words.length;
                     type = words[wLength - 1];
 
-                    writer.write(page.getPageName());
+                    writer.write(page.getPageName() + "");
                     writer.append(';');
                     writer.write(items.size() + "");
                     writer.append(';');
-                    writer.write(type);
+                    writer.write(type + "");
                     writer.append(';');
 
                     writer.write(isMore200KB + "");
@@ -70,9 +70,9 @@ public class PageImgReporter {
 
                     writer.write(item.getWidth() + "");
                     writer.append(';');
-                    writer.write(item.getAlt());
+                    writer.write(item.getAlt() + "");
                     writer.append(';');
-                    writer.write(item.getSrc());
+                    writer.write(item.getSrc() + "");
                     writer.append('\n');
                 }
                 writer.close();
@@ -82,7 +82,7 @@ public class PageImgReporter {
         }
     }
 
-    private void createReportHeader() {
+    public void createReportHeader() {
         log.debug(new Exception().getStackTrace()[0].getMethodName());
         try {
             FileWriter writer = new FileWriter(pathToReport, false);

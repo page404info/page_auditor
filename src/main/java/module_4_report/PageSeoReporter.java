@@ -15,16 +15,7 @@ import java.util.List;
 public class PageSeoReporter {
     private String pathToReport = PropertyConfigReader.getInstance().getSrcDir() + FileName.REPORT_PAGE_SEO.getName();
 
-    public void create(List<Page> pages) {
-        log.debug(new Exception().getStackTrace()[0].getMethodName());
-
-        createReportHeader();
-        createReportBody(pages);
-
-        log.info("Page seo REPORT SAVED TO FILE = " + pathToReport);
-    }
-
-    private void createReportBody(List<Page> pages) {
+    public void createReportBody(List<Page> pages) {
         log.debug(new Exception().getStackTrace()[0].getMethodName());
         for (Page page : pages) {
             try {
@@ -44,7 +35,7 @@ public class PageSeoReporter {
 
                 FileWriter writer = new FileWriter(pathToReport, true);
 
-                writer.write(page.getPageName());
+                writer.write(page.getPageName() + "");
                 writer.append(';');
 
                 writer.write(isNotUnique + "");
@@ -61,11 +52,11 @@ public class PageSeoReporter {
                 writer.write(page.getH1().length() + "");
                 writer.append(';');
 
-                writer.write(page.getTitle());
+                writer.write(page.getTitle() + "");
                 writer.append(';');
-                writer.write(page.getDescription());
+                writer.write(page.getDescription() + "");
                 writer.append(';');
-                writer.write(page.getH1());
+                writer.write(page.getH1() + "");
 
                 writer.append('\n');
                 writer.close();
@@ -75,7 +66,7 @@ public class PageSeoReporter {
         }
     }
 
-    private void createReportHeader() {
+    public void createReportHeader() {
         log.debug(new Exception().getStackTrace()[0].getMethodName());
         try {
             FileWriter writer = new FileWriter(pathToReport, false);

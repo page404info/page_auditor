@@ -1,6 +1,7 @@
 package module_4_report;
 
 import helper.FileName;
+import helper.MyHelper;
 import helper.PropertyConfigReader;
 import lombok.Data;
 import lombok.extern.log4j.Log4j2;
@@ -15,30 +16,33 @@ import java.util.List;
 public class PageStructureReporter {
     private String pathToReport = PropertyConfigReader.getInstance().getSrcDir() + FileName.REPORT_PAGE_STRUCTURE.getName();
 
-    public void create(List<Page> pages) {
-        log.debug(new Exception().getStackTrace()[0].getMethodName());
+//    public void create(List<Page> pages) {
+//        log.debug(new Exception().getStackTrace()[0].getMethodName());
+//
+//        createReportHeader();
+//        createReportBody(pages);
+//
+//        log.info("Page structure REPORT SAVED TO FILE = " + pathToReport);
+//    }
 
-        createReportHeader();
-        createReportBody(pages);
-
-        log.info("Page structure REPORT SAVED TO FILE = " + pathToReport);
-    }
-
-    private void createReportBody(List<Page> pages) {
+    public void createReportBody(List<Page> pages) {
         log.debug(new Exception().getStackTrace()[0].getMethodName());
         for (Page page : pages) {
             try {
                 FileWriter writer = new FileWriter(pathToReport, true);
 
-                writer.write(page.getPageName());
+                writer.write(page.getPageName() + "");
+                writer.append(';');
+                writer.write(MyHelper.isHrefLengthMore120(page.getPageName()) + "");
+                writer.append(';');
+                writer.write(page.getPageName().length() + "");
                 writer.append(';');
 
-                log.debug(">>> " + page.getPageName() + " : " + page.getCharset());
-                writer.write(page.getCharset());
+                writer.write(page.getCharset() + "");
                 writer.append(';');
-                writer.write(page.getViewport());
+                writer.write(page.getViewport() + "");
                 writer.append(';');
-                writer.write(page.getFaviconAttr());
+                writer.write(page.getFaviconAttr() + "");
                 writer.append(';');
 
                 writer.write(page.getElementCounter().getFaviconCount() + "");
@@ -96,11 +100,15 @@ public class PageStructureReporter {
         }
     }
 
-    private void createReportHeader() {
+    public void createReportHeader() {
         log.debug(new Exception().getStackTrace()[0].getMethodName());
         try {
             FileWriter writer = new FileWriter(pathToReport, false);
             writer.write("pageUrl");
+            writer.append(';');
+            writer.write("isPageUrl>120char");
+            writer.append(';');
+            writer.write("pageUrlLength");
             writer.append(';');
 
             writer.write("charset");

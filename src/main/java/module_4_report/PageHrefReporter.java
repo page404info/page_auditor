@@ -21,14 +21,7 @@ import static io.restassured.RestAssured.given;
 public class PageHrefReporter {
     private String pathToReport = PropertyConfigReader.getInstance().getSrcDir() + FileName.REPORT_PAGE_HREF.getName();
 
-    public void create(List<Page> pages) {
-        log.debug(new Exception().getStackTrace()[0].getMethodName());
-        createReportHeader();
-        createReportBody(pages);
-        log.info("Page href REPORT SAVED TO FILE = " + pathToReport);
-    }
-
-    private void createReportBody(List<Page> pages) {
+    public void createReportBody(List<Page> pages) {
         log.debug(new Exception().getStackTrace()[0].getMethodName());
         String srcUrl = PropertyConfigReader.getInstance().getSrcUrl();
         Response response;
@@ -61,13 +54,13 @@ public class PageHrefReporter {
                         log.error(e + " " + item);
                     }
 
-                    writer.write(page.getPageName());
+                    writer.write(page.getPageName() + "");
                     writer.append(';');
                     writer.write(srcCount + "");
                     writer.append(';');
-                    writer.write(type);
+                    writer.write(type + "");
                     writer.append(';');
-                    writer.write(MyHelper.getProtocol(item));
+                    writer.write(MyHelper.getProtocol(item) + "");
                     writer.append(';');
 
                     writer.write(isInner + "");
@@ -85,7 +78,7 @@ public class PageHrefReporter {
                     writer.append(';');
                     writer.write(item.length() + "");
                     writer.append(';');
-                    writer.write(item);
+                    writer.write(item + "");
                     writer.append(';');
 
                     writer.write(statusCode + "");
@@ -114,13 +107,13 @@ public class PageHrefReporter {
                         log.error(e + " " + item);
                     }
 
-                    writer.write(page.getPageName());
+                    writer.write(page.getPageName() + "");
                     writer.append(';');
                     writer.write(srcCount + "");
                     writer.append(';');
-                    writer.write(type);
+                    writer.write(type + "");
                     writer.append(';');
-                    writer.write(MyHelper.getProtocol(item));
+                    writer.write(MyHelper.getProtocol(item) + "");
                     writer.append(';');
 
                     writer.write(isInner + "");
@@ -138,7 +131,7 @@ public class PageHrefReporter {
                     writer.append(';');
                     writer.write(item.length() + "");
                     writer.append(';');
-                    writer.write(item);
+                    writer.write(item + "");
                     writer.append(';');
 
                     writer.write(statusCode + "");
@@ -168,13 +161,13 @@ public class PageHrefReporter {
                         log.error(e + " " + itemUrl);
                     }
 
-                    writer.write(page.getPageName());
+                    writer.write(page.getPageName() + "");
                     writer.append(';');
                     writer.write(srcCount + "");
                     writer.append(';');
-                    writer.write(type);
+                    writer.write(type + "");
                     writer.append(';');
-                    writer.write(MyHelper.getProtocol(item.getHref()));
+                    writer.write(MyHelper.getProtocol(item.getHref()) + "");
                     writer.append(';');
 
                     writer.write(isInner + "");
@@ -192,17 +185,17 @@ public class PageHrefReporter {
                     writer.append(';');
                     writer.write(itemUrl.length() + "");
                     writer.append(';');
-                    writer.write(itemUrl);
+                    writer.write(itemUrl + "");
                     writer.append(';');
 
                     writer.write(statusCode + "");
                     writer.append(';');
 
-                    writer.write(item.getTarget());
+                    writer.write(item.getTarget() + "");
                     writer.append(';');
-                    writer.write(item.getRel());
+                    writer.write(item.getRel() + "");
                     writer.append(';');
-                    writer.write(item.getText());
+                    writer.write(item.getText() + "");
                     writer.append('\n');
                 }
 
@@ -221,13 +214,13 @@ public class PageHrefReporter {
                         log.error(e + " " + itemUrl);
                     }
 
-                    writer.write(page.getPageName());
+                    writer.write(page.getPageName() + "");
                     writer.append(';');
                     writer.write(srcCount + "");
                     writer.append(';');
-                    writer.write(type);
+                    writer.write(type + "");
                     writer.append(';');
-                    writer.write(MyHelper.getProtocol(item.getSrc()));
+                    writer.write(MyHelper.getProtocol(item.getSrc()) + "");
                     writer.append(';');
 
                     writer.write(isInner + "");
@@ -245,7 +238,7 @@ public class PageHrefReporter {
                     writer.append(';');
                     writer.write(itemUrl.length() + "");
                     writer.append(';');
-                    writer.write(itemUrl);
+                    writer.write(itemUrl + "");
                     writer.append(';');
 
                     writer.write(statusCode + "");
@@ -266,7 +259,7 @@ public class PageHrefReporter {
         }
     }
 
-    private void createReportHeader() {
+    public void createReportHeader() {
         log.debug(new Exception().getStackTrace()[0].getMethodName());
         try {
             FileWriter writer = new FileWriter(pathToReport, false);

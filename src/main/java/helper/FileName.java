@@ -4,7 +4,7 @@ public enum FileName {
     CONFIG("src/main/resources/config.properties"),
     OBJECT_FILE_COUNT("src/main/resources/object_file_count.properties"),
     HREF_INTERNAL("/href_internal.txt"),
-    PAGE_OBJECT("/_page_object.json"),
+    PAGE_OBJECT("page_object.json"),
     REPORT_PAGE_STRUCTURE("/report_page_structure.csv"),
     REPORT_PAGE_IMG("/report_page_image.csv"),
     REPORT_PAGE_HREF("/report_page_href.csv"),

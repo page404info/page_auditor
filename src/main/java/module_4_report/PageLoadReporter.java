@@ -19,14 +19,7 @@ import static io.restassured.RestAssured.given;
 public class PageLoadReporter {
     private String pathToReport = PropertyConfigReader.getInstance().getSrcDir() + FileName.REPORT_PAGE_LOAD.getName();
 
-    public void create(List<Page> pages) {
-        log.debug(new Exception().getStackTrace()[0].getMethodName());
-        createReportHeader();
-        createReportBody(pages);
-        log.info("Page load REPORT SAVED TO FILE = " + pathToReport);
-    }
-
-    private void createReportBody(List<Page> pages) {
+    public void createReportBody(List<Page> pages) {
         log.debug(new Exception().getStackTrace()[0].getMethodName());
         Response response;
         int pageCount = pages.size();
@@ -95,7 +88,7 @@ public class PageLoadReporter {
                     isMore3sec = 1;
                 }
 
-                writer.write(page.getPageName());
+                writer.write(page.getPageName() + "");
                 writer.append(';');
                 writer.write(htmlByte + "");
                 writer.append(';');
@@ -137,7 +130,7 @@ public class PageLoadReporter {
         }
     }
 
-    private void createReportHeader() {
+    public void createReportHeader() {
         log.debug(new Exception().getStackTrace()[0].getMethodName());
         try {
             FileWriter writer = new FileWriter(pathToReport, false);

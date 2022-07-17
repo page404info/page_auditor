@@ -26,32 +26,38 @@ import java.util.Properties;
 @Log4j2
 @Data
 public class PageParser {
-    private int pageDelimiter = 250;
+    private int pageDelimiter = 500;
     private String pathToInternalHref = PropertyConfigReader.getInstance().getSrcDir() + FileName.HREF_INTERNAL.getName();
-    private String pathToPageObject = PropertyConfigReader.getInstance().getSrcDir() + FileName.PAGE_OBJECT.getName();
+    private String pathToPageObject;
 
     public void parse() {
         log.debug(new Exception().getStackTrace()[0].getMethodName());
         List<String> pages = MyHelper.readHrefFromFile(pathToInternalHref);
-
-        int pagesSize = pages.size();
-        int objectFileCount = (pagesSize / pageDelimiter) + 1;
-        writeObjectFileCountToProperty(objectFileCount);
-
-
         List<Page> pageObjList = new ArrayList<>();
+        int fileCount = 1, pagesSize = pages.size(), countFiles = countFiles(pages.size(), pageDelimiter);
 
-        for (String page : pages) {
+        writeObjectFileCountToProperty(countFiles);
 
+        for (int i = 0; i < pages.size(); i++) {
             System.out.println(pagesSize);
             pagesSize--;
 
-            pageObjList.add(getPageMetadata(page));
+            if (i == 0 || i % pageDelimiter == 0) {
+                pathToPageObject =
+                        PropertyConfigReader.getInstance().getSrcDir()
+                                + "/_" + fileCount
+                                + FileName.PAGE_OBJECT.getName();
+                fileCount++;
+            }
+            pageObjList.add(getPageMetadata(pages.get(i)));
+
+            if (pageObjList.size() == pageDelimiter) {
+                writePageObjListToJsonFile(pageObjList);
+                pageObjList.clear();
+            }
         }
 
         writePageObjListToJsonFile(pageObjList);
-
-
     }
 
     private void writePageObjListToJsonFile(List<Page> pages) {
@@ -76,6 +82,16 @@ public class PageParser {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private int countFiles(int listLength, int delimiter) {
+        int result = 0;
+        if (listLength % delimiter == 0) {
+            result = listLength / delimiter;
+        } else {
+            result = (listLength / delimiter) + 1;
+        }
+        return result;
     }
 
     private Page getPageMetadata(String page) {
