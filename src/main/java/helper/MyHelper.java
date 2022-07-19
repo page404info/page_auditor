@@ -87,10 +87,22 @@ public class MyHelper {
 
     public static boolean isHtmlPage(String href) {
         log.debug(new Exception().getStackTrace()[0].getMethodName());
-        boolean result = true;
+        boolean result = false;
         href = href.toLowerCase();
-        if (href.equals(PropertyConfigReader.getInstance().getSrcUrl() + "/index.html")
-                || href.contains("/download")
+
+        if (!href.equals(PropertyConfigReader.getInstance().getSrcUrl() + "/index.html")
+                || !isDocumentPage(href)) {
+            result = true;
+        }
+
+        return result;
+    }
+
+    public static boolean isDocumentPage(String href) {
+        log.debug(new Exception().getStackTrace()[0].getMethodName());
+        boolean result = false;
+        href = href.toLowerCase();
+        if (href.contains("/download")
                 || href.contains("/file")
                 || href.contains("/javascript")
                 || href.contains("/email-protection")
@@ -116,7 +128,7 @@ public class MyHelper {
                 || href.endsWith(".mp4")
                 || href.endsWith(".webp")
         ) {
-            result = false;
+            result = true;
         }
 
         return result;

@@ -20,6 +20,7 @@ import static io.restassured.RestAssured.given;
 @Data
 public class PageHrefReporter {
     private String pathToReport = PropertyConfigReader.getInstance().getSrcDir() + FileName.REPORT_PAGE_HREF.getName();
+    int fileCount = 1;
 
     public void createReportBody(List<Page> pages) {
         log.debug(new Exception().getStackTrace()[0].getMethodName());
@@ -36,16 +37,17 @@ public class PageHrefReporter {
                 List<Img> imgList = page.getImgList();
                 int srcCount = linkList.size() + scriptList.size() + hrefList.size() + imgList.size();
 
-                System.out.println(pageCount + " : " + srcCount + " href report");
-                pageCount--;
+//                System.out.println(fileCount + " : " + pageCount + " : " + srcCount + " href report");
+
 
                 for (String item : linkList) {
+                    System.out.println(fileCount + " : " + pageCount + " : " + srcCount + " href report");
+                    srcCount--;
                     String type = "link";
                     int statusCode = -1, isInner = 0;
                     if (item.contains(srcUrl)) {
                         isInner = 1;
                     }
-
 
                     try {
                         response = given().when().get(item);
@@ -53,6 +55,7 @@ public class PageHrefReporter {
                     } catch (Exception e) {
                         log.error(e + " " + item);
                     }
+
 
                     writer.write(page.getPageName() + "");
                     writer.append(';');
@@ -93,12 +96,13 @@ public class PageHrefReporter {
                 }
 
                 for (String item : scriptList) {
+                    System.out.println(fileCount + " : " + pageCount + " : " + srcCount + " href report");
+                    srcCount--;
                     String type = "script";
                     int statusCode = -1, isInner = 0;
                     if (item.contains(srcUrl)) {
                         isInner = 1;
                     }
-
 
                     try {
                         response = given().when().get(item);
@@ -106,6 +110,7 @@ public class PageHrefReporter {
                     } catch (Exception e) {
                         log.error(e + " " + item);
                     }
+
 
                     writer.write(page.getPageName() + "");
                     writer.append(';');
@@ -146,6 +151,8 @@ public class PageHrefReporter {
                 }
 
                 for (Href item : hrefList) {
+                    System.out.println(fileCount + " : " + pageCount + " : " + srcCount + " href report");
+                    srcCount--;
                     String type = "href";
                     String itemUrl = item.getHref();
                     int statusCode = -1, isInner = 0;
@@ -153,12 +160,15 @@ public class PageHrefReporter {
                         isInner = 1;
                     }
 
-
-                    try {
-                        response = given().when().get(itemUrl);
-                        statusCode = response.getStatusCode();
-                    } catch (Exception e) {
-                        log.error(e + " " + itemUrl);
+                    if (!MyHelper.isDocumentPage(itemUrl)) {
+                        try {
+                            response = given().when().get(itemUrl);
+                            statusCode = response.getStatusCode();
+                        } catch (Exception e) {
+                            log.error(e + " " + itemUrl);
+                        }
+                    } else {
+                        statusCode = -2;
                     }
 
                     writer.write(page.getPageName() + "");
@@ -200,6 +210,8 @@ public class PageHrefReporter {
                 }
 
                 for (Img item : imgList) {
+                    System.out.println(fileCount + " : " + pageCount + " : " + srcCount + " href report");
+                    srcCount--;
                     String type = "img";
                     String itemUrl = item.getSrc();
                     int statusCode = -1, isInner = 0;
@@ -213,6 +225,7 @@ public class PageHrefReporter {
                     } catch (Exception e) {
                         log.error(e + " " + itemUrl);
                     }
+
 
                     writer.write(page.getPageName() + "");
                     writer.append(';');
@@ -253,10 +266,13 @@ public class PageHrefReporter {
                 }
 
                 writer.close();
+                pageCount--;
             } catch (IOException e) {
                 log.error(e);
             }
         }
+
+        fileCount++;
     }
 
     public void createReportHeader() {
