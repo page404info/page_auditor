@@ -13,6 +13,9 @@ import module_3_parser.objects.Page;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 
 import static io.restassured.RestAssured.given;
 
@@ -21,6 +24,7 @@ import static io.restassured.RestAssured.given;
 public class PageHrefReporter {
     private String pathToReport = PropertyConfigReader.getInstance().getSrcDir() + FileName.REPORT_PAGE_HREF.getName();
     int fileCount = 1;
+    private Map<String, Integer> uniqHrefMap = new TreeMap<>();
 
     public void createReportBody(List<Page> pages) {
         log.debug(new Exception().getStackTrace()[0].getMethodName());
@@ -37,8 +41,6 @@ public class PageHrefReporter {
                 List<Img> imgList = page.getImgList();
                 int srcCount = linkList.size() + scriptList.size() + hrefList.size() + imgList.size();
 
-//                System.out.println(fileCount + " : " + pageCount + " : " + srcCount + " href report");
-
 
                 for (String item : linkList) {
                     System.out.println(fileCount + " : " + pageCount + " : " + srcCount + " href report");
@@ -50,9 +52,15 @@ public class PageHrefReporter {
                     }
 
                     try {
-                        response = given().when().get(item);
-                        statusCode = response.getStatusCode();
+                        if (isHrefInMap(item)) {
+                            statusCode = getStatusCodeFromMap(item);
+                        } else {
+                            response = given().when().get(item);
+                            statusCode = response.getStatusCode();
+                            uniqHrefMap.put(item, statusCode);
+                        }
                     } catch (Exception e) {
+                        uniqHrefMap.put(item, -1);
                         log.error(e + " " + item);
                     }
 
@@ -105,9 +113,15 @@ public class PageHrefReporter {
                     }
 
                     try {
-                        response = given().when().get(item);
-                        statusCode = response.getStatusCode();
+                        if (isHrefInMap(item)) {
+                            statusCode = getStatusCodeFromMap(item);
+                        } else {
+                            response = given().when().get(item);
+                            statusCode = response.getStatusCode();
+                            uniqHrefMap.put(item, statusCode);
+                        }
                     } catch (Exception e) {
+                        uniqHrefMap.put(item, -1);
                         log.error(e + " " + item);
                     }
 
@@ -160,15 +174,21 @@ public class PageHrefReporter {
                         isInner = 1;
                     }
 
-                    if (!MyHelper.isDocumentPage(itemUrl)) {
+                    if (MyHelper.isDocumentPage(itemUrl)) {
+                        statusCode = -2;
+                    } else {
                         try {
-                            response = given().when().get(itemUrl);
-                            statusCode = response.getStatusCode();
+                            if (isHrefInMap(itemUrl)) {
+                                statusCode = getStatusCodeFromMap(itemUrl);
+                            } else {
+                                response = given().when().get(itemUrl);
+                                statusCode = response.getStatusCode();
+                                uniqHrefMap.put(itemUrl, statusCode);
+                            }
                         } catch (Exception e) {
+                            uniqHrefMap.put(itemUrl, -1);
                             log.error(e + " " + itemUrl);
                         }
-                    } else {
-                        statusCode = -2;
                     }
 
                     writer.write(page.getPageName() + "");
@@ -220,9 +240,15 @@ public class PageHrefReporter {
                     }
 
                     try {
-                        response = given().when().get(itemUrl);
-                        statusCode = response.getStatusCode();
+                        if (isHrefInMap(itemUrl)) {
+                            statusCode = getStatusCodeFromMap(itemUrl);
+                        } else {
+                            response = given().when().get(itemUrl);
+                            statusCode = response.getStatusCode();
+                            uniqHrefMap.put(itemUrl, statusCode);
+                        }
                     } catch (Exception e) {
+                        uniqHrefMap.put(itemUrl, -1);
                         log.error(e + " " + itemUrl);
                     }
 
@@ -320,5 +346,32 @@ public class PageHrefReporter {
             log.error(e);
         }
     }
+
+    private boolean isHrefInMap(String href) {
+        boolean result = false;
+        Set<String> keys = uniqHrefMap.keySet();
+
+        for (String key : keys) {
+            if (key.equals(href)) {
+                result = true;
+            }
+        }
+
+        return result;
+    }
+
+    private int getStatusCodeFromMap(String href) {
+        int result = -1;
+        Set<String> keys = uniqHrefMap.keySet();
+
+        for (String key : keys) {
+            if (key.equals(href)) {
+                result = uniqHrefMap.get(key);
+            }
+        }
+
+        return result;
+    }
+
 
 }

@@ -31,7 +31,7 @@ public class PageLoadReporter {
                 List<String> scriptList = page.getScriptList();
                 List<Img> imgList = page.getImgList();
 
-                System.out.println(pageCount + " load report");
+                System.out.println(pageCount + " load report : " + page.getPageName());
                 pageCount--;
 
                 long startHtml = System.currentTimeMillis();
