@@ -91,7 +91,7 @@ public class MyHelper {
         href = href.toLowerCase();
 
         if (!href.equals(PropertyConfigReader.getInstance().getSrcUrl() + "/index.html")
-                || !isDocumentPage(href)) {
+                && !isDocumentPage(href)) {
             result = true;
         }
 
