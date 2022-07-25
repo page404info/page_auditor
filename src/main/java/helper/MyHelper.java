@@ -91,6 +91,7 @@ public class MyHelper {
         href = href.toLowerCase();
 
         if (!href.equals(PropertyConfigReader.getInstance().getSrcUrl() + "/index.html")
+                && !href.contains("#")
                 && !isDocumentPage(href)) {
             result = true;
         }
@@ -184,6 +185,12 @@ public class MyHelper {
         }
 
         return results;
+    }
+
+    public static void printToConsole(Set<String> urls){
+        for (String item : urls) {
+            System.out.println(item);
+        }
     }
 
     public static void takeScreenshot(String url, String fileNamePng) {
