@@ -11,7 +11,9 @@ public enum FileName {
     REPORT_PAGE_SEO("/report_page_seo.csv"),
     REPORT_PAGE_LOAD("/report_page_load.csv"),
     REPORT_REDIRECT("/report_redirect.csv"),
-    REPORT_SITEMAP("/report_sitemap.txt")
+    REPORT_SITEMAP("/report_sitemap.txt"),
+    REPORT_CONTACT("/href_contact.txt"),
+    REPORT_HREF_EXTERNAL("/href_external.txt")
     ;
 
     private String name;

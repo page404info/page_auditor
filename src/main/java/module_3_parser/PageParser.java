@@ -119,13 +119,13 @@ public class PageParser {
 
             pageObj.setElementCounter(parseElementCounter(document));
         } catch (IOException e) {
-            pageObj.setTitle("");
-            pageObj.setDescription("");
-            pageObj.setH1("");
+            pageObj.setTitle("-1");
+            pageObj.setDescription("-1");
+            pageObj.setH1("-1");
 
-            pageObj.setCharset("");
-            pageObj.setViewport("");
-            pageObj.setFaviconAttr("");
+            pageObj.setCharset("-1");
+            pageObj.setViewport("-1");
+            pageObj.setFaviconAttr("-1");
 
             pageObj.setLinkList(parseLink(null));
             pageObj.setScriptList(parseScript(null));
@@ -220,7 +220,7 @@ public class PageParser {
                 results.add(item.attr("abs:href"));
             }
         } catch (Exception e) {
-            results.add("data:void(0)");
+            results.add("-1");
             log.error(e);
         }
         return results;
@@ -236,7 +236,7 @@ public class PageParser {
                 results.add(item.attr("abs:src"));
             }
         } catch (Exception e) {
-            results.add("data:void(0)");
+            results.add("-1");
             log.error(e);
         }
         return results;
@@ -257,9 +257,9 @@ public class PageParser {
             }
         } catch (Exception e) {
             Img img = new Img();
-            img.setSrc("data:void(0)");
-            img.setAlt("data:void(0)");
-            img.setWidth("data:void(0)");
+            img.setSrc("-1");
+            img.setAlt("-1");
+            img.setWidth("-1");
             results.add(img);
             log.error(e);
         }
@@ -282,10 +282,10 @@ public class PageParser {
             }
         } catch (Exception e) {
             Href href = new Href();
-            href.setHref("data:void(0)");
-            href.setTarget("data:void(0)");
-            href.setRel("data:void(0)");
-            href.setText("data:void(0)");
+            href.setHref("-1");
+            href.setTarget("-1");
+            href.setRel("-1");
+            href.setText("-1");
             results.add(href);
             log.error(e);
         }

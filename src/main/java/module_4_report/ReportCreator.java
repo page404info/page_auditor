@@ -51,6 +51,9 @@ public class ReportCreator {
 
             pages.clear();
         }
+
+        new SiteContactReporter().create();
+        new SiteHrefExternalReporter().create();
         log.info("CREATED ALL REPORTS: " + PropertyConfigReader.getInstance().getSrcDir());
     }
 
