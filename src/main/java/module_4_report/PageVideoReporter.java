@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.extern.log4j.Log4j2;
 import module_3_parser.objects.Img;
 import module_3_parser.objects.Page;
+import module_3_parser.objects.Video;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -16,8 +17,8 @@ import static io.restassured.RestAssured.given;
 
 @Log4j2
 @Data
-public class PageImgReporter {
-    private String pathToReport = PropertyConfigReader.getInstance().getSrcDir() + FileName.REPORT_PAGE_IMG.getName();
+public class PageVideoReporter {
+    private String pathToReport = PropertyConfigReader.getInstance().getSrcDir() + FileName.REPORT_PAGE_VIDEO.getName();
 
     public void createReportBody(List<Page> pages) {
         log.debug(new Exception().getStackTrace()[0].getMethodName());
@@ -27,20 +28,17 @@ public class PageImgReporter {
         for (Page page : pages) {
             try {
                 FileWriter writer= new FileWriter(pathToReport, true);
-                List<Img> items = page.getImgList();
+                List<Video> items = page.getVideoList();
 
-                System.out.println(pageCount + " : " + items.size() + " image report");
+                System.out.println(pageCount + " : " + items.size() + " video report");
                 pageCount--;
 
-                for (Img item : items) {
-                    int imgByte = -1, isMore200KB = 0;
+                for (Video item : items) {
+                    int videoByte = -1;
                     String type = "unknown";
                     try {
                         response = given().when().get(item.getSrc());
-                        imgByte = response.getBody().asByteArray().length;
-                        if(imgByte/1024 > 200){
-                            isMore200KB = 1;
-                        }
+                        videoByte = response.getBody().asByteArray().length;
                     } catch (Exception e) {
                         log.error(e + " " + item.getSrc());
                     }
@@ -56,14 +54,14 @@ public class PageImgReporter {
                     writer.write(type + "");
                     writer.append(';');
 
-                    writer.write(isMore200KB + "");
+                    writer.write(videoByte + "");
                     writer.append(';');
-                    writer.write(imgByte + "");
+                    writer.write(videoByte/1024/1024 + "");
                     writer.append(';');
 
                     writer.write(item.getWidth() + "");
                     writer.append(';');
-                    writer.write(item.getAlt() + "");
+                    writer.write(item.getHeight() + "");
                     writer.append(';');
                     writer.write(item.getSrc() + "");
                     writer.append('\n');
@@ -81,19 +79,19 @@ public class PageImgReporter {
             FileWriter writer = new FileWriter(pathToReport, false);
             writer.write("pageUrl");
             writer.append(';');
-            writer.write("imgCount");
+            writer.write("videoCount");
             writer.append(';');
             writer.write("type");
             writer.append(';');
 
-            writer.write("is>200KB");
-            writer.append(';');
             writer.write("Byte");
+            writer.append(';');
+            writer.write("MByte");
             writer.append(';');
 
             writer.write("width");
             writer.append(';');
-            writer.write("alt");
+            writer.write("height");
             writer.append(';');
             writer.write("src");
 

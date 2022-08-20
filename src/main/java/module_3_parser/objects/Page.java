@@ -20,6 +20,7 @@ public class Page {
     private List<String> scriptList;
 
     private List<Img> imgList;
+    private List<Video> videoList;
     private List<Href> hrefList;
 
     private ElementCounter elementCounter;

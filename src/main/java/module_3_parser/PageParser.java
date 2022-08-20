@@ -6,10 +6,7 @@ import helper.MyHelper;
 import helper.PropertyConfigReader;
 import lombok.Data;
 import lombok.extern.log4j.Log4j2;
-import module_3_parser.objects.ElementCounter;
-import module_3_parser.objects.Href;
-import module_3_parser.objects.Img;
-import module_3_parser.objects.Page;
+import module_3_parser.objects.*;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -115,6 +112,7 @@ public class PageParser {
             pageObj.setScriptList(parseScript(document));
 
             pageObj.setImgList(parseImg(document));
+            pageObj.setVideoList(parseVideo(document));
             pageObj.setHrefList(parseHref(document));
 
             pageObj.setElementCounter(parseElementCounter(document));
@@ -131,6 +129,7 @@ public class PageParser {
             pageObj.setScriptList(parseScript(null));
 
             pageObj.setImgList(parseImg(null));
+            pageObj.setVideoList(parseVideo(null));
             pageObj.setHrefList(parseHref(null));
 
             pageObj.setElementCounter(parseElementCounter(null));
@@ -266,6 +265,30 @@ public class PageParser {
         return results;
     }
 
+    private List<Video> parseVideo(Document document) {
+        log.debug(new Exception().getStackTrace()[0].getMethodName());
+        List<Video> results = new ArrayList<>();
+
+        try {
+            Elements items = document.getElementsByTag("video");
+            for (Element item : items) {
+                Video video = new Video();
+                video.setSrc(item.getElementsByTag("source").get(0).attr("abs:src"));
+                video.setWidth(item.attr("width").replace(";", ","));
+                video.setHeight(item.attr("height").replace(";", ","));
+                results.add(video);
+            }
+        } catch (Exception e) {
+            Video video = new Video();
+            video.setSrc("-1");
+            video.setWidth("-1");
+            video.setHeight("-1");
+            results.add(video);
+            log.error(e);
+        }
+        return results;
+    }
+
     private List<Href> parseHref(Document document) {
         log.debug(new Exception().getStackTrace()[0].getMethodName());
         List<Href> results = new ArrayList<>();
@@ -317,6 +340,7 @@ public class PageParser {
             Elements inputs = document.getElementsByTag("input");
             Elements buttons = document.getElementsByTag("button");
             Elements tables = document.getElementsByTag("table");
+            Elements videos = document.getElementsByTag("video");
 
 
             elementCounter.setTitleCount(titles.size());
@@ -339,6 +363,7 @@ public class PageParser {
             elementCounter.setInputFieldCount(inputs.size());
             elementCounter.setButtonCount(buttons.size());
             elementCounter.setTableCount(tables.size());
+            elementCounter.setVideoCount(videos.size());
 
             elementCounter.setCharDocumentCount(document.toString().length());
             elementCounter.setCharTextCount(document.text().length());
@@ -365,6 +390,7 @@ public class PageParser {
             elementCounter.setInputFieldCount(-1);
             elementCounter.setButtonCount(-1);
             elementCounter.setTableCount(-1);
+            elementCounter.setVideoCount(-1);
 
             elementCounter.setCharDocumentCount(-1);
             elementCounter.setCharTextCount(-1);

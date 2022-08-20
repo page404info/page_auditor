@@ -24,6 +24,7 @@ public class ElementCounter {
     private Integer inputFieldCount;
     private Integer buttonCount;
     private Integer tableCount;
+    private Integer videoCount;
 
     private Integer charDocumentCount;
     private Integer charTextCount;
