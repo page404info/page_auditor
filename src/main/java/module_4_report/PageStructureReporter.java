@@ -82,6 +82,8 @@ public class PageStructureReporter {
                 writer.append(';');
                 writer.write(page.getElementCounter().getTableCount() + "");
                 writer.append(';');
+                writer.write(page.getElementCounter().getVideoCount() + "");
+                writer.append(';');
 
                 writer.write(page.getElementCounter().getCharDocumentCount() + "");
                 writer.append(';');
@@ -156,6 +158,8 @@ public class PageStructureReporter {
             writer.write("button");
             writer.append(';');
             writer.write("table");
+            writer.append(';');
+            writer.write("video");
             writer.append(';');
 
             writer.write("charDocument");

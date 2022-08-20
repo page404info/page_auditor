@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.extern.log4j.Log4j2;
 import module_3_parser.objects.Img;
 import module_3_parser.objects.Page;
+import module_3_parser.objects.Video;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -30,6 +31,7 @@ public class PageLoadReporter {
                 List<String> linkList = page.getLinkList();
                 List<String> scriptList = page.getScriptList();
                 List<Img> imgList = page.getImgList();
+                List<Video> videoList = page.getVideoList();
 
                 System.out.println(pageCount + " load report : " + page.getPageName());
                 pageCount--;
@@ -81,8 +83,21 @@ public class PageLoadReporter {
                 long finishImg = System.currentTimeMillis();
                 long imgMs = finishImg - startImg;
 
-                long totalKByte = (htmlByte + linkByte + scriptByte + imgByte) / 1024;
-                long totalMs = htmlMs + linkMs + scriptMs + imgMs;
+                long videoByte = 0;
+                long startVideo = System.currentTimeMillis();
+                for (Video item : videoList) {
+                    try {
+                        response = given().when().get(item.getSrc());
+                        videoByte += response.getBody().asByteArray().length;
+                    } catch (Exception e) {
+                        log.error(e + " " + item);
+                    }
+                }
+                long finishVideo = System.currentTimeMillis();
+                long videoMs = finishVideo - startVideo;
+
+                long totalKByte = (htmlByte + linkByte + scriptByte + imgByte + videoByte) / 1024;
+                long totalMs = htmlMs + linkMs + scriptMs + imgMs + videoMs;
                 int isMore3sec = 0;
                 if (totalMs / 1000 > 3) {
                     isMore3sec = 1;
@@ -114,6 +129,13 @@ public class PageLoadReporter {
                 writer.write(imgByte + "");
                 writer.append(';');
                 writer.write(imgMs + "");
+                writer.append(';');
+
+                writer.write(videoList.size() + "");
+                writer.append(';');
+                writer.write(videoByte + "");
+                writer.append(';');
+                writer.write(videoMs + "");
                 writer.append(';');
 
                 writer.write(totalKByte + "");
@@ -161,6 +183,13 @@ public class PageLoadReporter {
             writer.write("imgByte");
             writer.append(';');
             writer.write("imgMs");
+            writer.append(';');
+
+            writer.write("videoCount");
+            writer.append(';');
+            writer.write("videoByte");
+            writer.append(';');
+            writer.write("videoMs");
             writer.append(';');
 
             writer.write("totalKByte");
