@@ -52,7 +52,7 @@ public class CrawlerWeb {
 
             Elements links = document.getElementsByTag("a");
             for (Element link : links) {
-                resultList.add(link.absUrl("href"));
+                resultList.add(link.attr("abs:href"));
             }
         } catch (IOException e) {
             log.error(e);
@@ -80,7 +80,6 @@ public class CrawlerWeb {
         Set<String> results = new TreeSet<>();
 
         Set<String> tempSet = new TreeSet<>(pages);
-        tempSet.remove(srcUrl);
 
         while (tempSet.size() > 0) {
             System.out.println(tempSet.size());
