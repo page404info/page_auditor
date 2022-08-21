@@ -40,6 +40,7 @@ public class PageHrefReporter {
                 List<Href> hrefList = page.getHrefList();
                 List<Img> imgList = page.getImgList();
                 int srcCount = linkList.size() + scriptList.size() + hrefList.size() + imgList.size();
+                int srcCountReport = linkList.size() + scriptList.size() + hrefList.size() + imgList.size();
 
 
                 for (String item : linkList) {
@@ -67,7 +68,7 @@ public class PageHrefReporter {
 
                     writer.write(page.getPageName() + "");
                     writer.append(';');
-                    writer.write(srcCount + "");
+                    writer.write(srcCountReport + "");
                     writer.append(';');
                     writer.write(type + "");
                     writer.append(';');
@@ -128,7 +129,7 @@ public class PageHrefReporter {
 
                     writer.write(page.getPageName() + "");
                     writer.append(';');
-                    writer.write(srcCount + "");
+                    writer.write(srcCountReport + "");
                     writer.append(';');
                     writer.write(type + "");
                     writer.append(';');
@@ -193,7 +194,7 @@ public class PageHrefReporter {
 
                     writer.write(page.getPageName() + "");
                     writer.append(';');
-                    writer.write(srcCount + "");
+                    writer.write(srcCountReport + "");
                     writer.append(';');
                     writer.write(type + "");
                     writer.append(';');
@@ -255,7 +256,7 @@ public class PageHrefReporter {
 
                     writer.write(page.getPageName() + "");
                     writer.append(';');
-                    writer.write(srcCount + "");
+                    writer.write(srcCountReport + "");
                     writer.append(';');
                     writer.write(type + "");
                     writer.append(';');
