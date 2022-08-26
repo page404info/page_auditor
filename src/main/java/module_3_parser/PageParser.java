@@ -143,7 +143,7 @@ public class PageParser {
         Elements items = document.getElementsByTag("title");
         String result = "_not1";
         if (items.size() == 1) {
-            result = items.get(0).text().replace(";", ",");
+            result = Jsoup.parse(items.get(0).text()).text().replace(";", ",");
         }
         return result;
     }
@@ -153,7 +153,7 @@ public class PageParser {
         Elements items = document.select("meta[name='description']");
         String result = "_not1";
         if (items.size() == 1) {
-            result = items.get(0).attr("content").replace(";", ",");
+            result = Jsoup.parse(items.get(0).attr("content")).text().replace(";",",");
         }
         return result;
     }
@@ -163,7 +163,7 @@ public class PageParser {
         Elements items = document.getElementsByTag("h1");
         String result = "_not1";
         if (items.size() == 1) {
-            result = items.get(0).text().replace(";", ",");
+            result = Jsoup.parse(items.get(0).text()).text().replace(";", ",");
         }
         return result;
     }
@@ -176,9 +176,9 @@ public class PageParser {
             Elements items2 = document.select("meta[http-equiv='Content-Type']");
 
             if (items.size() == 1) {
-                result = items.get(0).attr("charset").replace(";", ",");
+                result = Jsoup.parse(items.get(0).attr("charset")).text().replace(";", ",");
             } else if (items2.size() == 1) {
-                result = items2.get(0).attr("content").replace(";", ",");
+                result = Jsoup.parse(items2.get(0).attr("content")).text().replace(";", ",");
             }
         } catch (Exception e) {
             log.error(e);
@@ -191,7 +191,7 @@ public class PageParser {
         Elements items = document.select("meta[name='viewport']");
         String result = "_not1";
         if (items.size() == 1) {
-            result = items.get(0).attr("content").replace(";", ",");
+            result = Jsoup.parse(items.get(0).attr("content")).text().replace(";", ",");
         }
         return result;
     }
@@ -250,8 +250,8 @@ public class PageParser {
             for (Element item : items) {
                 Img img = new Img();
                 img.setSrc(item.attr("abs:src"));
-                img.setAlt(item.attr("alt").replace(";", ","));
-                img.setWidth(item.attr("width").replace(";", ","));
+                img.setAlt(Jsoup.parse(item.attr("alt")).text().replace(";", ","));
+                img.setWidth(Jsoup.parse(item.attr("width")).text().replace(";", ","));
                 results.add(img);
             }
         } catch (Exception e) {
@@ -274,8 +274,8 @@ public class PageParser {
             for (Element item : items) {
                 Video video = new Video();
                 video.setSrc(item.getElementsByTag("source").get(0).attr("abs:src"));
-                video.setWidth(item.attr("width").replace(";", ","));
-                video.setHeight(item.attr("height").replace(";", ","));
+                video.setWidth(Jsoup.parse(item.attr("width")).text().replace(";", ","));
+                video.setHeight(Jsoup.parse(item.attr("height")).text().replace(";", ","));
                 results.add(video);
             }
         } catch (Exception e) {
@@ -298,8 +298,8 @@ public class PageParser {
             for (Element item : items) {
                 Href href = new Href();
                 href.setHref(item.attr("abs:href"));
-                href.setTarget(item.attr("target").replace(";", ","));
-                href.setRel(item.attr("rel").replace(";", ","));
+                href.setTarget(Jsoup.parse(item.attr("target")).text().replace(";", ","));
+                href.setRel(Jsoup.parse(item.attr("rel")).text().replace(";", ","));
                 href.setText(item.text());
                 results.add(href);
             }
