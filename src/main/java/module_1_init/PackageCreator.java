@@ -62,6 +62,7 @@ class PackageCreator {
         String urlPart = body.split("/")[0]
                 .replace('.', '_')
                 .replace('/', '_')
+                .replace(':', '_')
                 .toLowerCase();
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuuMMdd_HHmmss");
