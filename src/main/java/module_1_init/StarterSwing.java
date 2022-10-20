@@ -1,18 +1,21 @@
 package module_1_init;
 
 import helper.MyHelper;
+import helper.PropertyConfigReader;
 import lombok.extern.log4j.Log4j2;
 
+import javax.swing.*;
 import java.util.Scanner;
 
 @Log4j2
-public class Starter {
+public class StarterSwing {
     private String srcUrl, pathToSrcHref = "";
     private boolean isCheckAllPages;
 
     public void start() {
         inputParams();
         createConfigProperty();
+        JOptionPane.showMessageDialog(null, "Start " + PropertyConfigReader.getInstance().getSrcUrl());
     }
 
     private void inputParams() {
@@ -46,16 +49,14 @@ public class Starter {
 
     private String inputSrcUrl() {
         log.debug(new Exception().getStackTrace()[0].getMethodName());
-        Scanner sc = new Scanner(System.in);
-        System.out.print(">> Enter url: ");
-        return MyHelper.deleteEndSlashFromHref(sc.nextLine().toLowerCase());
+        String userInput = JOptionPane.showInputDialog("Enter url");
+        return MyHelper.deleteEndSlashFromHref(userInput.toLowerCase());
     }
 
     private boolean isCheckAllPages() {
         log.debug(new Exception().getStackTrace()[0].getMethodName());
-        Scanner sc = new Scanner(System.in);
-        System.out.print(">> Check all pages (y/n): ");
-        String answer = sc.nextLine().toLowerCase();
+        String userInput = JOptionPane.showInputDialog("Check all pages (y/n)");
+        String answer = userInput.toLowerCase();
 
         boolean result = false;
         if (answer.equals("y")) {
@@ -66,9 +67,8 @@ public class Starter {
 
     private boolean isPageFile() {
         log.debug(new Exception().getStackTrace()[0].getMethodName());
-        Scanner sc = new Scanner(System.in);
-        System.out.print(">> Have a file with links (y/n): ");
-        String answer = sc.nextLine().toLowerCase();
+        String userInput = JOptionPane.showInputDialog("Have a file with links (y/n)");
+        String answer = userInput.toLowerCase();
 
         boolean result = false;
         if (answer.equals("y")) {
@@ -79,9 +79,8 @@ public class Starter {
 
     private String inputPathToSrcFile() {
         log.debug(new Exception().getStackTrace()[0].getMethodName());
-        Scanner sc = new Scanner(System.in);
-        System.out.print(">> Enter path to file: ");
-        return sc.nextLine().toLowerCase();
+        String userInput = JOptionPane.showInputDialog("Enter path to file");
+        return userInput.toLowerCase();
     }
 
 }
