@@ -13,11 +13,12 @@ public class Main {
     public static void main(String[] args) {
         log.debug(new Exception().getStackTrace()[0].getMethodName());
 
-        new StarterSwing().start();
+//        new StarterSwing().start();
+        new Starter().start();
         new CrawlerWeb().search();
         new PageParser().parse();
         new ReportCreator().create();
-        JOptionPane.showMessageDialog(null, "Finish " + PropertyConfigReader.getInstance().getSrcUrl()
-        + "\nopen " + PropertyConfigReader.getInstance().getSrcDir());
+//        JOptionPane.showMessageDialog(null, "Finish " + PropertyConfigReader.getInstance().getSrcUrl()
+//                + "\nopen " + PropertyConfigReader.getInstance().getSrcDir());
     }
 }

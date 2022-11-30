@@ -38,6 +38,8 @@ public class PageSeoReporter {
                 writer.write(page.getPageName() + "");
                 writer.append(';');
 
+                writer.write(page.getLang());
+                writer.append(';');
                 writer.write(isNotUnique + "");
                 writer.append(';');
                 writer.write(isTitleMore60Char + "");
@@ -52,11 +54,11 @@ public class PageSeoReporter {
                 writer.write(page.getH1().length() + "");
                 writer.append(';');
 
-                writer.write(page.getTitle() + "");
+                writer.write(page.getTitle());
                 writer.append(';');
-                writer.write(page.getDescription() + "");
+                writer.write(page.getDescription());
                 writer.append(';');
-                writer.write(page.getH1() + "");
+                writer.write(page.getH1());
 
                 writer.append('\n');
                 writer.close();
@@ -71,6 +73,8 @@ public class PageSeoReporter {
         try {
             FileWriter writer = new FileWriter(pathToReport, false);
             writer.write("pageUrl");
+            writer.append(';');
+            writer.write("lang");
             writer.append(';');
 
             writer.write("isNotUnique");

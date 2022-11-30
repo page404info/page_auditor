@@ -100,6 +100,7 @@ public class PageParser {
             Document document = Jsoup.connect(page).maxBodySize(0).userAgent("Mozilla").ignoreHttpErrors(true).get();
             log.debug(">>> " + document.toString().length());
 
+            pageObj.setLang(parseLang(document));
             pageObj.setTitle(parseTitle(document));
             pageObj.setDescription(parseDescription(document));
             pageObj.setH1(parseH1(document));
@@ -117,6 +118,8 @@ public class PageParser {
 
             pageObj.setElementCounter(parseElementCounter(document));
         } catch (IOException e) {
+            pageObj.setLang("-1");
+            pageObj.setTitle("-1");
             pageObj.setTitle("-1");
             pageObj.setDescription("-1");
             pageObj.setH1("-1");
@@ -136,6 +139,16 @@ public class PageParser {
             log.error(e);
         }
         return pageObj;
+    }
+
+    private String parseLang(Document document) {
+        log.debug(new Exception().getStackTrace()[0].getMethodName());
+        Elements items = document.getElementsByTag("html");
+        String result = "_not1";
+        if (items.size() == 1) {
+            result = Jsoup.parse(items.get(0).attr("lang")).text().replace(";",",");
+        }
+        return result;
     }
 
     private String parseTitle(Document document) {
