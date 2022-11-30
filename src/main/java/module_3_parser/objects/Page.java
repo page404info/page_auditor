@@ -8,6 +8,7 @@ import java.util.List;
 public class Page {
     private String pageName;
 
+    private String lang;
     private String title;
     private String description;
     private String h1;
