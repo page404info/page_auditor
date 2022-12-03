@@ -27,6 +27,7 @@ public class ReportCreator {
         new SitemapCreator().create();
 
         PageStructureReporter pageStructureReporter = new PageStructureReporter();
+        PageSemanticReporter pageSemanticReporter = new PageSemanticReporter();
         PageImgReporter pageImgReporter = new PageImgReporter();
         PageVideoReporter pageVideoReporter = new PageVideoReporter();
         PageHrefReporter pageHrefReporter = new PageHrefReporter();
@@ -34,6 +35,7 @@ public class ReportCreator {
         PageLoadReporter pageLoadReporter = new PageLoadReporter();
 
         pageStructureReporter.createReportHeader();
+        pageSemanticReporter.createReportHeader();
         pageImgReporter.createReportHeader();
         pageVideoReporter.createReportHeader();
         pageHrefReporter.createReportHeader();
@@ -46,6 +48,7 @@ public class ReportCreator {
             List<Page> pages = getPageListFromJsonFile(pathToJsonFile);
 
             pageStructureReporter.createReportBody(pages);
+            pageSemanticReporter.createReportBody(pages);
             pageSeoReporter.createReportBody(pages);
             pageImgReporter.createReportBody(pages);
             pageVideoReporter.createReportBody(pages);

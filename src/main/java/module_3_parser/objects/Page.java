@@ -25,4 +25,5 @@ public class Page {
     private List<Href> hrefList;
 
     private ElementCounter elementCounter;
+    private SemanticCounter semanticCounter;
 }

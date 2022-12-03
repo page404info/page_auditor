@@ -6,6 +6,7 @@ public enum FileName {
     HREF_INTERNAL("/href_internal.txt"),
     PAGE_OBJECT("page_object.json"),
     REPORT_PAGE_STRUCTURE("/report_page_structure.csv"),
+    REPORT_PAGE_SEMANTIC("/report_page_semantic.csv"),
     REPORT_PAGE_IMG("/report_page_image.csv"),
     REPORT_PAGE_VIDEO("/report_page_video.csv"),
     REPORT_PAGE_HREF("/report_page_href.csv"),

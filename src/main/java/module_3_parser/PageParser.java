@@ -117,6 +117,7 @@ public class PageParser {
             pageObj.setHrefList(parseHref(document));
 
             pageObj.setElementCounter(parseElementCounter(document));
+            pageObj.setSemanticCounter(parseSemanticCounter(document));
         } catch (IOException e) {
             pageObj.setLang("-1");
             pageObj.setTitle("-1");
@@ -136,6 +137,7 @@ public class PageParser {
             pageObj.setHrefList(parseHref(null));
 
             pageObj.setElementCounter(parseElementCounter(null));
+            pageObj.setSemanticCounter(parseSemanticCounter(null));
             log.error(e);
         }
         return pageObj;
@@ -145,8 +147,13 @@ public class PageParser {
         log.debug(new Exception().getStackTrace()[0].getMethodName());
         Elements items = document.getElementsByTag("html");
         String result = "_not1";
-        if (items.size() == 1) {
-            result = Jsoup.parse(items.get(0).attr("lang")).text().replace(";",",");
+        try {
+            if (items.size() == 1) {
+                result = Jsoup.parse(items.get(0).attr("lang")).text().replace(";",",");
+            }
+        } catch (Exception e){
+            result = "-1";
+            log.error(e);
         }
         return result;
     }
@@ -408,6 +415,46 @@ public class PageParser {
             elementCounter.setCharDocumentCount(-1);
             elementCounter.setCharTextCount(-1);
             elementCounter.setComment(true);
+            log.error(e);
+        }
+
+        return elementCounter;
+    }
+
+    private SemanticCounter parseSemanticCounter(Document document) {
+        log.debug(new Exception().getStackTrace()[0].getMethodName());
+        SemanticCounter elementCounter = new SemanticCounter();
+
+        try {
+            Elements headers = document.getElementsByTag("header");
+            Elements navs = document.getElementsByTag("nav");
+            Elements mains = document.getElementsByTag("main");
+            Elements footers = document.getElementsByTag("footer");
+
+            Elements articles = document.getElementsByTag("article");
+            Elements sections = document.getElementsByTag("section");
+            Elements asides = document.getElementsByTag("aside");
+
+
+            elementCounter.setHeaderCount(headers.size());
+            elementCounter.setNavCount(navs.size());
+            elementCounter.setMainCount(mains.size());
+            elementCounter.setFooterCount(footers.size());
+
+            elementCounter.setArticleCount(articles.size());
+            elementCounter.setSectionCount(sections.size());
+            elementCounter.setAsideCount(asides.size());
+
+        } catch (Exception e) {
+            elementCounter.setHeaderCount(-1);
+            elementCounter.setNavCount(-1);
+            elementCounter.setMainCount(-1);
+            elementCounter.setFooterCount(-1);
+
+            elementCounter.setArticleCount(-1);
+            elementCounter.setSectionCount(-1);
+            elementCounter.setAsideCount(-1);
+
             log.error(e);
         }
 
