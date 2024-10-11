@@ -113,6 +113,8 @@ public class PageParser {
             pageObj.setScriptList(parseScript(document));
 
             pageObj.setImgList(parseImg(document));
+            pageObj.setButtonList(parseButton(document));
+            pageObj.setInputList(parseInput(document));
             pageObj.setVideoList(parseVideo(document));
             pageObj.setHrefList(parseHref(document));
 
@@ -133,6 +135,8 @@ public class PageParser {
             pageObj.setScriptList(parseScript(null));
 
             pageObj.setImgList(parseImg(null));
+            pageObj.setButtonList(parseButton(null));
+            pageObj.setInputList(parseInput(null));
             pageObj.setVideoList(parseVideo(null));
             pageObj.setHrefList(parseHref(null));
 
@@ -142,6 +146,7 @@ public class PageParser {
         }
         return pageObj;
     }
+
 
     private String parseLang(Document document) {
         log.debug(new Exception().getStackTrace()[0].getMethodName());
@@ -285,6 +290,56 @@ public class PageParser {
         return results;
     }
 
+    private List<Button> parseButton(Document document) {
+        log.debug(new Exception().getStackTrace()[0].getMethodName());
+        List<Button> results = new ArrayList<>();
+
+        try {
+            Elements items = document.getElementsByTag("button");
+            for (Element item : items) {
+                Button button = new Button();
+                button.setType(item.attr("type"));
+                button.setAriaLabel(Jsoup.parse(item.attr("aria-label")).text().replace(";", ","));
+                button.setTabIndex(Jsoup.parse(item.attr("tabindex")).text().replace(";", ","));
+                results.add(button);
+            }
+        } catch (Exception e) {
+            Button button = new Button();
+            button.setType("-1");
+            button.setAriaLabel("-1");
+            button.setTabIndex("-1");
+            results.add(button);
+            log.error(e);
+        }
+        return results;
+    }
+
+    private List<Input> parseInput(Document document) {
+        log.debug(new Exception().getStackTrace()[0].getMethodName());
+        List<Input> results = new ArrayList<>();
+
+        try {
+            Elements items = document.getElementsByTag("input");
+            for (Element item : items) {
+                Input input = new Input();
+                input.setType(item.attr("type"));
+                input.setName(item.attr("name"));
+                input.setAriaLabel(item.attr("aria-label"));
+                input.setTabIndex(item.attr("tabindex"));
+                results.add(input);
+            }
+        } catch (Exception e) {
+            Input input = new Input();
+            input.setType("-1");
+            input.setName("-1");
+            input.setAriaLabel("-1");
+            input.setTabIndex("-1");
+            results.add(input);
+            log.error(e);
+        }
+        return results;
+    }
+
     private List<Video> parseVideo(Document document) {
         log.debug(new Exception().getStackTrace()[0].getMethodName());
         List<Video> results = new ArrayList<>();
@@ -321,6 +376,8 @@ public class PageParser {
                 href.setTarget(Jsoup.parse(item.attr("target")).text().replace(";", ","));
                 href.setRel(Jsoup.parse(item.attr("rel")).text().replace(";", ","));
                 href.setText(item.text());
+                href.setAriaLabel(item.attr("aria-label"));
+                href.setTabIndex(item.attr("tabindex"));
                 results.add(href);
             }
         } catch (Exception e) {
@@ -329,11 +386,14 @@ public class PageParser {
             href.setTarget("-1");
             href.setRel("-1");
             href.setText("-1");
+            href.setAriaLabel("-1");
+            href.setTabIndex("-1");
             results.add(href);
             log.error(e);
         }
         return results;
     }
+
 
     private ElementCounter parseElementCounter(Document document) {
         log.debug(new Exception().getStackTrace()[0].getMethodName());

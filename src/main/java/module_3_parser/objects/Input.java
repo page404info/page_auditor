@@ -3,11 +3,9 @@ package module_3_parser.objects;
 import lombok.Data;
 
 @Data
-public class Href {
-    private String href;
-    private String target;
-    private String rel;
-    private String text;
+public class Input {
+    private String type;
+    private String name;
     private String ariaLabel;
     private String tabIndex;
 }

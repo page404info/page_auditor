@@ -21,6 +21,8 @@ public class Page {
     private List<String> scriptList;
 
     private List<Img> imgList;
+    private List<Button> buttonList;
+    private List<Input> inputList;
     private List<Video> videoList;
     private List<Href> hrefList;
 

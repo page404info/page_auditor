@@ -29,6 +29,8 @@ public class ReportCreator {
         PageStructureReporter pageStructureReporter = new PageStructureReporter();
         PageSemanticReporter pageSemanticReporter = new PageSemanticReporter();
         PageImgReporter pageImgReporter = new PageImgReporter();
+        PageButtonReporter pageButtonReporter = new PageButtonReporter();
+        PageInputReporter pageInputReporter = new PageInputReporter();
         PageVideoReporter pageVideoReporter = new PageVideoReporter();
         PageHrefReporter pageHrefReporter = new PageHrefReporter();
         PageSeoReporter pageSeoReporter = new PageSeoReporter();
@@ -37,6 +39,8 @@ public class ReportCreator {
         pageStructureReporter.createReportHeader();
         pageSemanticReporter.createReportHeader();
         pageImgReporter.createReportHeader();
+        pageButtonReporter.createReportHeader();
+        pageInputReporter.createReportHeader();
         pageVideoReporter.createReportHeader();
         pageHrefReporter.createReportHeader();
         pageSeoReporter.createReportHeader();
@@ -51,6 +55,8 @@ public class ReportCreator {
             pageSemanticReporter.createReportBody(pages);
             pageSeoReporter.createReportBody(pages);
             pageImgReporter.createReportBody(pages);
+            pageButtonReporter.createReportBody(pages);
+            pageInputReporter.createReportBody(pages);
             pageVideoReporter.createReportBody(pages);
             pageLoadReporter.createReportBody(pages);
             pageHrefReporter.createReportBody(pages);

@@ -101,6 +101,10 @@ public class PageHrefReporter {
                     writer.write("");
                     writer.append(';');
                     writer.write("");
+                    writer.append(';');
+                    writer.write("");
+                    writer.append(';');
+                    writer.write("");
                     writer.append('\n');
                 }
 
@@ -157,6 +161,10 @@ public class PageHrefReporter {
                     writer.write(statusCode + "");
                     writer.append(';');
 
+                    writer.write("");
+                    writer.append(';');
+                    writer.write("");
+                    writer.append(';');
                     writer.write("");
                     writer.append(';');
                     writer.write("");
@@ -227,6 +235,10 @@ public class PageHrefReporter {
                     writer.write(item.getRel() + "");
                     writer.append(';');
                     writer.write(item.getText() + "");
+                    writer.append(';');
+                    writer.write(item.getAriaLabel() + "");
+                    writer.append(';');
+                    writer.write(item.getTabIndex() + "");
                     writer.append('\n');
                 }
 
@@ -289,6 +301,10 @@ public class PageHrefReporter {
                     writer.write("");
                     writer.append(';');
                     writer.write("");
+                    writer.append(';');
+                    writer.write("");
+                    writer.append(';');
+                    writer.write("");
                     writer.append('\n');
                 }
 
@@ -340,6 +356,10 @@ public class PageHrefReporter {
             writer.write("rel");
             writer.append(';');
             writer.write("text");
+            writer.append(';');
+            writer.write("ariaLabel");
+            writer.append(';');
+            writer.write("tabIndex");
 
             writer.append('\n');
             writer.close();

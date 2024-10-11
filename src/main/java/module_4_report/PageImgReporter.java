@@ -26,7 +26,7 @@ public class PageImgReporter {
 
         for (Page page : pages) {
             try {
-                FileWriter writer= new FileWriter(pathToReport, true);
+                FileWriter writer = new FileWriter(pathToReport, true);
                 List<Img> items = page.getImgList();
 
                 System.out.println(pageCount + " : " + items.size() + " image report");
@@ -38,7 +38,7 @@ public class PageImgReporter {
                     try {
                         response = given().when().get(item.getSrc());
                         imgByte = response.getBody().asByteArray().length;
-                        if(imgByte/1024 > 200){
+                        if (imgByte / 1024 > 200) {
                             isMore200KB = 1;
                         }
                     } catch (Exception e) {
